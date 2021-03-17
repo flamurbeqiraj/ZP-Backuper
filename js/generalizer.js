@@ -22,6 +22,3 @@ function check_configuration(pagename) {
         }
     });
 }
-$('#checkConfiguration').click(function() {
-    alert("Checking");
-});
