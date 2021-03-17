@@ -29,19 +29,19 @@
                         <table>
                             <tr>
                                 <td>Hostname:</td>
-                                <td><input type="text" class="form-control w-auto ms-5" value="localhost"></td>
+                                <td><input type="text" id="host" class="form-control w-auto ms-5" value="localhost"></td>
                             </tr>
                             <tr>
                                 <td>Username:</td>
-                                <td><input type="text" class="form-control w-auto ms-5" value="root"></td>
+                                <td><input type="text" id="user" class="form-control w-auto ms-5" value="root"></td>
                             </tr>
                             <tr>
                                 <td>Password:</td>
-                                <td><input type="text" class="form-control w-auto ms-5"></td>
+                                <td><input type="text" id="pass" class="form-control w-auto ms-5"></td>
                             </tr>
                             <tr>
                                 <td>Database:</td>
-                                <td><input type="text" class="form-control w-auto ms-5" value="zpbackuper"></td>
+                                <td><input type="text" id="thedb" class="form-control w-auto ms-5" value="zpbackuper"></td>
                             </tr>
                             <tr>
                                 <td colspan="2"><button class="btn btn-success w-100" id="checkConfiguration">CHECK & REGISTER</button></td>
@@ -55,6 +55,7 @@
 </body>
 
 <script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/sweetalert2@10.js"></script>
 <script src="js/generalizer.js"></script>
 <script src="js/custom.js"></script>
 <script>
