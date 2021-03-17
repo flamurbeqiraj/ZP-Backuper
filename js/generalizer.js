@@ -13,10 +13,11 @@ function check_configuration(pagename) {
         },
         dataType: 'JSON',
         success: function(response) {
+            console.log(response);
             if (pagename === 'index' && response.status === 'no_db') {
                 window.location.href = 'configuration.html';
             }
-            if (pagename === 'config' && response.status !== 'no_db') {
+            if (pagename === 'config' && response.status === 'db_found') {
                 window.location.href = 'index.html';
             }
         }
