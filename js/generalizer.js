@@ -1,9 +1,11 @@
 function load_menu() {
     $(".inc--menufile").load("includes/menu.html");
 }
+
 function load_logo() {
     $(".inc--logo").load("includes/logo.html");
 }
+
 function check_configuration(pagename) {
     $.ajax({
         type: 'post',
@@ -12,7 +14,7 @@ function check_configuration(pagename) {
             case: 'checkConfiguration'
         },
         dataType: 'JSON',
-        success: function(response) {
+        success: function (response) {
             // console.log(response);
             if (pagename === 'index' && response.status === 'no_db') {
                 window.location.href = 'configuration.html';
@@ -23,19 +25,107 @@ function check_configuration(pagename) {
         }
     });
 }
-function checkStep2(dbname) {
-    $('#statuslog').text("Checking if database '"+dbname+"' exists...");
+
+function checkStep2(dbhost, dbuser, dbpass, dbname) {
+    $('#statuslog').text("Checking if database '" + dbname + "' exists...");
 
     $.ajax({
         type: 'post',
         url: 'includes/server.php',
         data: {
             case: 'checkDatabaseExists',
-            thedb:dbname
+            hostname: dbhost,
+            username: dbuser,
+            dbpass: dbpass,
+            thedb: dbname
         },
         dataType: 'JSON',
-        success: function(response) {
-            console.log(response);
+        success: function (response) {
+            setTimeout(function () {
+                if (response.status === 1) {
+                    $('#warningMessage').addClass('d-none');
+                    $('#statuslog').html("Database with this name already exists! Please use another name.<br><br> <button class='btn btn-danger btn-sm' onClick='Swal.close();'>CLOSE</button>");
+                }
+                if (response.status === 2) {
+                    $('#statuslog').text("Database was created successfuly.");
+                    setTimeout(() => {
+                        checkStep3(dbhost, dbuser, dbpass, dbname)
+                    }, 3000);
+                }
+                if (response.status === 3) {
+                    $('#warningMessage').addClass('d-none');
+                    $('#statuslog').html(response.error_message + '<br><br>Unable to create the database!<br><br> <button class="btn btn-danger btn-sm" onClick="Swal.close();">CLOSE</button>');
+                }
+            }, 2000);
+        }
+    });
+}
+
+function checkStep3(dbhost, dbuser, dbpass, dbname) {
+    $('#statuslog').text("Creating tables...");
+
+    $.ajax({
+        type: 'post',
+        url: 'includes/server.php',
+        data: {
+            case: 'creatingConfigTables',
+            hostname: dbhost,
+            username: dbuser,
+            dbpass: dbpass,
+            thedb: dbname
+        },
+        dataType: 'JSON',
+        success: function (response) {
+            setTimeout(function () {
+                if (response.status === true) {
+                    $('#statuslog').text("Config table was created successfuly.");
+                    setTimeout(() => {
+                        checkStep4(dbhost, dbuser, dbpass, dbname);
+                    }, 3000);
+                }
+                if (response.status === false) {
+                    $('#warningMessage').addClass('d-none');
+                    $('#statuslog').html(response.error_message + '<br><br>Unable to create the configuration table!<br><br> <button class="btn btn-danger btn-sm" onClick="Swal.close();">CLOSE</button>');
+                }
+            }, 2000);
+        }
+    });
+}
+
+function checkStep4(dbhost, dbuser, dbpass, dbname) {
+    $('#statuslog').text("Creating db connection file...");
+
+    $.ajax({
+        type: 'post',
+        url: 'includes/server.php',
+        data: {
+            case: 'creatingConfigFile',
+            hostname: dbhost,
+            username: dbuser,
+            dbpass: dbpass,
+            thedb: dbname
+        },
+        dataType: 'JSON',
+        success: function (response) {
+            setTimeout(function () {
+                if (response.status === 1) {
+                    $('#statuslog').text("Connection file exists already!<br><br> <button class='btn btn-danger btn-sm' onClick='Swal.close();'>CLOSE</button>");
+                    $('#warningMessage').addClass('d-none');
+                }
+                if (response.status === 2) {
+                    $('#statuslog').text("Connection file unable to create!<br><br> <button class='btn btn-danger btn-sm' onClick='Swal.close();'>CLOSE</button>");
+                    // $('#statuslog').html(response.error_message + '<br><br>Unable to create the configuration table!<br><br> <button class="btn btn-danger btn-sm" onClick="Swal.close();">CLOSE</button>');
+                }
+                if (response.status === 3) {
+                    $('#statuslog').text("Connection file successfuly created.");
+                    setTimeout(() => {
+                        $('#statuslog').text("Setup completed, you will be redirected soon.");
+                        setTimeout(() => {
+                            window.location.href = './';
+                        }, 2000);
+                    }, 3000);
+                }
+            }, 2000);
         }
     });
 }

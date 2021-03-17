@@ -27,7 +27,7 @@ $('#checkConfiguration').click(function() {
                 if (response.error_status === false) {
                     $('#statuslog').text("Connected successfuly with your database.");
                     setTimeout(function() {
-                        checkStep2(theDb);
+                        checkStep2(host, user, pass, theDb);
                     }, 2000);
                 }
                 if (response.error_status === true) {
