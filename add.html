@@ -23,7 +23,8 @@
                 <h3>Add your project's database credentials here</h3>
                 <p>Make sure that your IP Address is whitelisted at your remote project, otherwise you aren't able to
                     make the Backup Queries. If you are using cPanel, just go to the Database section and click on
-                    Remote MySQL, than add this IP Address: Fetching information...</p>
+                    Remote MySQL.<br>
+                    Then add this IP Address: <span id="getMyIp">Fetching information...</span></p>
 
                 <section class="d-flex justify-content-center">
                     <table class="w-100">
@@ -56,8 +57,11 @@
 <script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/generalizer.js"></script>
 <script>
+    var page = "add";
     load_logo();
     load_menu();
+    get_ip_address();
+    check_configuration(page);
 </script>
 
 </html>
