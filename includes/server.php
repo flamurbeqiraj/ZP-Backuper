@@ -1,11 +1,5 @@
 <?php
-    if (isset($_POST['case']) && $_POST['case'] == 'checkConfiguration') {
-        if (!file_exists('dbcon.php')) {
-            echo json_encode(array('status' => 'no_db'));
-        } else {
-            echo json_encode(array('status' => 'db_found'));
-        }
-    }
+    //Configuration script's
     if (isset($_POST['case']) && $_POST['case'] == 'getDbConnStatus') {
         ini_set('display_errors', '0');
         $host = $_POST['hostname'];
@@ -29,7 +23,6 @@
 
         echo json_encode($reponseArray);
     }
-
     if (isset($_POST['case']) && $_POST['case'] == 'checkDatabaseExists') {
         ini_set('display_errors', '0');
         $hostname       = $_POST['hostname'];
@@ -53,7 +46,6 @@
             }
         }
     }
-
     if (isset($_POST['case']) && $_POST['case'] == 'creatingConfigTables') {
         ini_set('display_errors', '0');
         $hostname       = $_POST['hostname'];
@@ -108,4 +100,38 @@
         } else {
             echo json_encode(array("status" => 1));
         }
+    }
+
+    //Activities
+    if (isset($_POST['case']) && $_POST['case'] == 'checkConfiguration') {
+        if (!file_exists('dbcon.php')) {
+            echo json_encode(array('status' => 'no_db'));
+        } else {
+            echo json_encode(array('status' => 'db_found'));
+        }
+    }
+    if (isset($_POST['case']) && $_POST['case'] == 'loadProjectsMenu') {
+        require_once('dbcon.php');
+        $status = '';
+        $sql = "SELECT id, projectname FROM `table_projects`";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $collection = array();
+            while($row = $result->fetch_assoc()) {
+                $subarray = array();
+
+                $subarray['id']          = $row['id'];
+                $subarray['projectname'] = $row['projectname'];
+
+                $collection[] = $subarray;
+            }
+            $status = 'ok';
+        }
+
+        $responseArray = array(
+            "status" => $status,
+            "data"   => $collection
+        );
+
+        echo json_encode($responseArray);
     }

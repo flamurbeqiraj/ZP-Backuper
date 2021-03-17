@@ -1,5 +1,24 @@
 function load_menu() {
-    $(".inc--menufile").load("includes/menu.html");
+    $(".inc--menufile").load("includes/menu.html", function() {
+        $.ajax({
+            type: 'POST',
+            url: 'includes/server.php',
+            data: {
+                case: "loadProjectsMenu"
+            },
+            dataType: 'JSON',
+            success: function(response) {
+                if (response.status == 'ok') {
+                    $('#menu-projects').html('');
+                    $.each(response.data, function(k, v) {
+                        $('#menu-projects').append('<tr><td class="pt-0 pb-0"><a href="'+v.id+'">'+v.projectname+'</a></td></tr>');
+                    });
+                } else {
+                    $('#menu-projects').html('<tr><td>No projects yet</td></tr>');
+                }
+            }
+        });
+    });
 }
 
 function load_logo() {
