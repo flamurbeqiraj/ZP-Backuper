@@ -113,10 +113,10 @@
     if (isset($_POST['case']) && $_POST['case'] == 'loadProjectsMenu') {
         require_once('dbcon.php');
         $status = '';
+        $collection = array();
         $sql = "SELECT id, projectname FROM `table_projects`";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
-            $collection = array();
             while($row = $result->fetch_assoc()) {
                 $subarray = array();
 
