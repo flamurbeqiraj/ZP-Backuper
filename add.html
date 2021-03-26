@@ -30,22 +30,22 @@
                     <table class="w-100">
                         <tr>
                             <td>Hostname:</td>
-                            <td><input type="text" class="form-control w-100"></td>
+                            <td><input type="text" class="form-control w-100" id="host"></td>
                         </tr>
                         <tr>
                             <td>Username:</td>
-                            <td><input type="text" class="form-control w-100"></td>
+                            <td><input type="text" class="form-control w-100" id="user"></td>
                         </tr>
                         <tr>
                             <td>Password:</td>
-                            <td><input type="text" class="form-control w-100"></td>
+                            <td><input type="text" class="form-control w-100" id="pass"></td>
                         </tr>
                         <tr>
                             <td>Database:</td>
-                            <td><input type="text" class="form-control w-100"></td>
+                            <td><input type="text" class="form-control w-100" id="thedb"></td>
                         </tr>
                         <tr>
-                            <td colspan="2"><button class="btn btn-success w-100">CHECK & REGISTER</button></td>
+                            <td colspan="2"><button class="btn btn-success w-100" id="registerNewHost">CHECK & REGISTER</button></td>
                         </tr>
                     </table>
                 </section>
@@ -55,7 +55,9 @@
 </body>
 
 <script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/sweetalert2@10.js"></script>
 <script src="js/generalizer.js"></script>
+<script src="js/custom.js"></script>
 <script>
     var page = "add";
     load_logo();

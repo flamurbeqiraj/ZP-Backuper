@@ -165,3 +165,67 @@ function checkStep4(dbhost, dbuser, dbpass, dbname) {
         }
     });
 }
+
+function checkDatabaseExistance(dbhost, dbuser, dbpass, dbname) {
+    $.ajax({
+        type: 'post',
+        url: 'includes/server.php',
+        data: {
+            case: 'getDatabaseNameExist',
+            hostname: dbhost,
+            username: dbuser,
+            dbpass: dbpass,
+            thedb: dbname
+        },
+        dataType: 'JSON',
+        success: function (response) {
+            setTimeout(function () {
+                if (response.error_status === true) {
+                    $('#statuslog').text("Database doesen't exist!");
+                    setTimeout(() => {
+                        Swal.close();
+                    }, 1000); 
+                }
+                if (response.error_status === false) {
+                    $('#statuslog').text("Database located successfuly.");
+                    setTimeout(() => {
+                        $('#statuslog').text("Registring...");
+                        registerNewDatabase(dbhost, dbuser, dbpass, dbname);
+                    }, 1000);
+                }
+            }, 2000);
+        }
+    });
+}
+
+function registerNewDatabase(fhs, fus, fps, fdb) {
+    $.ajax({
+        type: 'post',
+        url: 'includes/server.php',
+        data: {
+            case: 'registerNewProject',
+            hostname: fhs,
+            username: fus,
+            dbpass: fps,
+            thedb: fdb
+        },
+        dataType: 'JSON',
+        success: function (response) {
+            setTimeout(function () {
+                if (response.error_status === true) {
+                    $('#statuslog').text("Your database refused to register the project.");
+                    setTimeout(() => {
+                        Swal.close();
+                    }, 3000);
+                }
+                if (response.error_status === false) {
+                    $('#statuslog').text("Project is registred successfuly.");
+                    setTimeout(() => {
+                        Swal.close();
+                        window.location.href = 'index.html'
+                    }, 1000);
+                }
+            }, 2000);
+        }
+    });
+}

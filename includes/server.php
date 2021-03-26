@@ -23,6 +23,29 @@
 
         echo json_encode($reponseArray);
     }
+    if (isset($_POST['case']) && $_POST['case'] == 'getDatabaseNameExist') {
+        ini_set('display_errors', '0');
+        $host = $_POST['hostname'];
+        $user = $_POST['username'];
+        $pass = $_POST['password'];
+        $thedb= $_POST['database'];
+
+        $errorStatus = false;
+        $errorMessage= '';
+
+        $conn = new mysqli($host, $user, $pass, $thedb);
+        if ($conn->connect_error) {
+            $errorStatus = true;
+            $errorMessage= $conn->connect_error;
+        }
+
+        $reponseArray = array(
+            "error_status"  => $errorStatus,
+            "error_message" => $errorMessage
+        );
+
+        echo json_encode($reponseArray);
+    }
     if (isset($_POST['case']) && $_POST['case'] == 'checkDatabaseExists') {
         ini_set('display_errors', '0');
         $hostname       = $_POST['hostname'];
@@ -134,4 +157,18 @@
         );
 
         echo json_encode($responseArray);
+    }
+    if (isset($_POST['case']) && $_POST['case'] == 'registerNewProject') {
+        require_once('dbcon.php');
+        $hostname       = $_POST['hostname'];
+        $username       = $_POST['username'];
+        $password       = $_POST['dbpass'];
+        $databasename   = $_POST['thedb'];
+
+        $sql = "INSERT INTO `table_projects`(`id`, `projectname`, `hostname`, `username`, `password`, `databasename`, `date_registred`, `backup_nr`, `last_backup`) VALUES ('', 'DEFAULT_NAME', '$hostname', '$username', '$password', '$databasename', NOW(), '0', '0000-00-00 00:00:00')";
+        if ($conn->query($sql)) {
+            echo 1;
+        } else {
+            echo 2;
+        }
     }
