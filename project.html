@@ -19,20 +19,19 @@
         <div class="d-flex">
             <div class="inc--menufile"></div>
 
-            <div class="mainCont border border-dark rounded-3 bg-white p-3 me-2">
+            <div class="mainCont border border-dark rounded-3 bg-white p-3">
                 <div class="d-flex align-items-baseline">
                     <h3>Project name</h3>
-                    <span class="fst-italic fs-6 text-muted ms-2">(<b>Last backup:</b> <span>2 Hours and 13
-                            Minutes</span>)</span>
+                    <span class="fst-italic fs-6 text-muted ms-2">(<b>Last backup:</b> <span>2 Hours and 13 Minutes</span>)</span>
                 </div>
 
-                <div class="w-100 h-75 border border-dark overflow-auto mb-1">
+                <div class="w-100 border border-dark overflow-auto mb-1">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col" class="position-sticky sticky-top bg-primary">#</th>
                                 <th scope="col" class="position-sticky sticky-top bg-primary">Filename</th>
-                                <th scope="col" class="position-sticky sticky-top bg-primary">Date</th>
+                                <th scope="col" class="position-sticky sticky-top bg-primary">Backup date</th>
                                 <th scope="col" class="position-sticky sticky-top bg-primary">Action</th>
                             </tr>
                         </thead>
@@ -40,8 +39,8 @@
                             <tr>
                                 <th scope="row">1</th>
                                 <td>filename.txt</td>
-                                <td>24.02.2019</td>
-                                <td><button class="btn btn-primary btn-sm">View</button> <button class="btn btn-danger btn-sm">Delete</button></td>
+                                <td>24.02.2019 22:31</td>
+                                <td><button class="btn btn-primary btn-sm btn-rxs">VIEW</button> <button class="btn btn-danger btn-sm btn-rxs">DELETE</button></td>
                             </tr>
                             <tr>
                                 <th scope="row" class="text-center" colspan="4">There is no backup file for this project.</th>
@@ -50,7 +49,9 @@
                     </table>
                 </div>
 
-                <span>Quick backup: </span> <select><option value="1">JSON Format</option></select> <button class="btn btn-sm btn-success">GENERATE</button>
+                <div>
+                    <span>Quick backup: </span> <select><option value="1">JSON Format</option></select> <button class="btn btn-sm btn-success">GENERATE</button>
+                </div>
             </div>
         </div>
     </div>
