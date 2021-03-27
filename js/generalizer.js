@@ -180,13 +180,13 @@ function checkDatabaseExistance(dbhost, dbuser, dbpass, dbname) {
         dataType: 'JSON',
         success: function (response) {
             setTimeout(function () {
-                if (response.error_status === true) {
+                if (response.status === 2) {
                     $('#statuslog').text("Database doesen't exist!");
                     setTimeout(() => {
                         Swal.close();
                     }, 1000); 
                 }
-                if (response.error_status === false) {
+                if (response.status === 1) {
                     $('#statuslog').text("Database located successfuly.");
                     setTimeout(() => {
                         $('#statuslog').text("Registring...");

@@ -28,23 +28,17 @@
         $host = $_POST['hostname'];
         $user = $_POST['username'];
         $pass = $_POST['password'];
-        $thedb= $_POST['database'];
+        $thedb= $_POST['thedb'];
 
-        $errorStatus = false;
-        $errorMessage= '';
+        $conn = new mysqli($host, $user, $pass);
+        $sql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '".$thedb."'";
+        $result = $conn->query($sql);
 
-        $conn = new mysqli($host, $user, $pass, $thedb);
-        if ($conn->connect_error) {
-            $errorStatus = true;
-            $errorMessage= $conn->connect_error;
+        if ($result->num_rows > 0) {
+            echo json_encode(array("status" => 1));
+        } else {
+            echo json_encode(array("status" => 2));
         }
-
-        $reponseArray = array(
-            "error_status"  => $errorStatus,
-            "error_message" => $errorMessage
-        );
-
-        echo json_encode($reponseArray);
     }
     if (isset($_POST['case']) && $_POST['case'] == 'checkDatabaseExists') {
         ini_set('display_errors', '0');
