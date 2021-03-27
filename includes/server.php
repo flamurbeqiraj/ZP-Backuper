@@ -81,7 +81,7 @@
             `databasename` varchar(100) NOT NULL,
             `date_registred` datetime NOT NULL,
             `backup_nr` int(11) NOT NULL,
-            `last_backup` datetime NOT NULL
+            `last_backup` datetime DEFAULT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
           ALTER TABLE `table_projects` ADD PRIMARY KEY (`id`);
           ALTER TABLE `table_projects` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;";
@@ -154,15 +154,16 @@
     }
     if (isset($_POST['case']) && $_POST['case'] == 'registerNewProject') {
         require_once('dbcon.php');
+        $project       = $_POST['project'];
         $hostname       = $_POST['hostname'];
         $username       = $_POST['username'];
         $password       = $_POST['dbpass'];
         $databasename   = $_POST['thedb'];
 
-        $sql = "INSERT INTO `table_projects`(`id`, `projectname`, `hostname`, `username`, `password`, `databasename`, `date_registred`, `backup_nr`, `last_backup`) VALUES ('', 'DEFAULT_NAME', '$hostname', '$username', '$password', '$databasename', NOW(), '0', '0000-00-00 00:00:00')";
+        $sql = "INSERT INTO `table_projects`(`id`, `projectname`, `hostname`, `username`, `password`, `databasename`, `date_registred`, `backup_nr`, `last_backup`) VALUES (NULL, '$project', '$hostname', '$username', '$password', '$databasename', NOW(), '0', '0000-00-00 00:00:00')";
         if ($conn->query($sql)) {
-            echo 1;
+            echo json_encode(array("error_status" => 1));
         } else {
-            echo 2;
+            echo json_encode(array("error_status" => 2));
         }
     }

@@ -40,6 +40,7 @@ $('#checkConfiguration').click(function () {
 });
 
 $('#registerNewHost').click(function () {
+    var prnm = $('#prname').val();
     var host = $('#host').val();
     var user = $('#user').val();
     var pass = $('#pass').val();
@@ -70,7 +71,7 @@ $('#registerNewHost').click(function () {
                     $('#statuslog').text("Connection created successfuly.");
                     setTimeout(() => {
                         $('#statuslog').text("Looking for database.");
-                        checkDatabaseExistance(host, user, pass, theDb);
+                        checkDatabaseExistance(prnm, host, user, pass, theDb);
                     }, 2000);
                 }
                 if (response.error_status === true) {

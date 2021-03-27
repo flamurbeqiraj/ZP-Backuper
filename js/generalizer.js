@@ -166,7 +166,7 @@ function checkStep4(dbhost, dbuser, dbpass, dbname) {
     });
 }
 
-function checkDatabaseExistance(dbhost, dbuser, dbpass, dbname) {
+function checkDatabaseExistance(prnm, dbhost, dbuser, dbpass, dbname) {
     $.ajax({
         type: 'post',
         url: 'includes/server.php',
@@ -190,7 +190,7 @@ function checkDatabaseExistance(dbhost, dbuser, dbpass, dbname) {
                     $('#statuslog').text("Database located successfuly.");
                     setTimeout(() => {
                         $('#statuslog').text("Registring...");
-                        registerNewDatabase(dbhost, dbuser, dbpass, dbname);
+                        registerNewDatabase(prnm, dbhost, dbuser, dbpass, dbname);
                     }, 1000);
                 }
             }, 2000);
@@ -198,12 +198,13 @@ function checkDatabaseExistance(dbhost, dbuser, dbpass, dbname) {
     });
 }
 
-function registerNewDatabase(fhs, fus, fps, fdb) {
+function registerNewDatabase(fpr, fhs, fus, fps, fdb) {
     $.ajax({
         type: 'post',
         url: 'includes/server.php',
         data: {
             case: 'registerNewProject',
+            project: fpr,
             hostname: fhs,
             username: fus,
             dbpass: fps,
@@ -212,13 +213,13 @@ function registerNewDatabase(fhs, fus, fps, fdb) {
         dataType: 'JSON',
         success: function (response) {
             setTimeout(function () {
-                if (response.error_status === true) {
+                if (response.error_status === 2) {
                     $('#statuslog').text("Your database refused to register the project.");
                     setTimeout(() => {
                         Swal.close();
                     }, 3000);
                 }
-                if (response.error_status === false) {
+                if (response.error_status === 1) {
                     $('#statuslog').text("Project is registred successfuly.");
                     setTimeout(() => {
                         Swal.close();
