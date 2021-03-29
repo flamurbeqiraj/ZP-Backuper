@@ -14,7 +14,7 @@ function load_menu() {
                         $('#menu-projects').append('<tr><td class="pt-0 pb-0"><a href="'+v.id+'">'+v.projectname+'</a></td></tr>');
                     });
                 } else {
-                    $('#menu-projects').html('<tr><td>No projects yet</td></tr>');
+                    $('#menu-projects').html("<tr><td>No project's yet</td></tr>");
                 }
             }
         });
