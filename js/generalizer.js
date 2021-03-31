@@ -11,7 +11,7 @@ function load_menu() {
                 if (response.status == 'ok') {
                     $('#menu-projects').html('');
                     $.each(response.data, function(k, v) {
-                        $('#menu-projects').append('<tr><td class="pt-0 pb-0"><a href="'+v.id+'">'+v.projectname+'</a></td></tr>');
+                        $('#menu-projects').append('<tr><td class="pt-0 pb-0"><a href="project.php?id='+v.id+'">'+v.projectname+'</a></td></tr>');
                     });
                 } else {
                     $('#menu-projects').html("<tr><td>No project's yet</td></tr>");
@@ -23,6 +23,27 @@ function load_menu() {
 
 function load_logo() {
     $(".inc--logo").load("includes/logo.html");
+}
+
+function load_project(projectid) {
+    $.ajax({
+        type: 'POST',
+        url: 'includes/server.php',
+        data: {
+            case:   "loadThisProject",
+            id:     projectid
+        },
+        dataType: 'JSON',
+        success: function(response) {
+            if (response.status === false) {
+                $("#project_name").text("Project not found!");
+            } else {
+                $("#project_name").text(response.name);
+                $("#backup_info").show();
+                $("#last_backup").text(response.l_backup_date);
+            }
+        }
+    });
 }
 
 function get_ip_address() {
@@ -229,4 +250,8 @@ function registerNewDatabase(fpr, fhs, fus, fps, fdb) {
             }, 2000);
         }
     });
+}
+
+function load_backups() {
+    
 }

@@ -152,6 +152,28 @@
 
         echo json_encode($responseArray);
     }
+    if (isset($_POST['case']) && $_POST['case'] == 'loadThisProject') {
+        require_once('dbcon.php');
+        $givenid = $_POST['id'];
+        $sql = "SELECT * FROM `table_projects` WHERE id='$givenid'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_array();
+
+            $finalArray = array(
+                "status"        => true,
+                "name"          => $row['projectname'],
+                "l_backup_date" => $row['last_backup']===NULL?"Never":date('d.m.Y H:i', strtotime($row['last_backup'])),
+                "backup_number" => $row['backup_nr']
+            );
+        } else {
+            $finalArray = array(
+                "status"        => false
+            );
+        }
+
+        echo json_encode($finalArray);
+    }
     if (isset($_POST['case']) && $_POST['case'] == 'registerNewProject') {
         require_once('dbcon.php');
         $project       = $_POST['project'];

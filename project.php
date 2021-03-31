@@ -11,22 +11,21 @@
 
     <title>Document</title>
 </head>
-
 <body>
     <div>
         <div class="container inc--logo"></div>
-
+        
         <div class="d-flex">
             <div class="inc--menufile"></div>
-
+            
             <div class="mainCont border border-dark rounded-3 bg-white p-3">
                 <div class="d-flex align-items-baseline">
-                    <h3>Project name</h3>
-                    <span class="fst-italic fs-6 text-muted ms-2">(<b>Last backup:</b> <span>2 Hours and 13 Minutes</span>)</span>
+                    <h3 id="project_name">...</h3>
+                    <span class="fst-italic fs-6 text-muted ms-2" id="backup_info">(<b>Last backup:</b> <span id="last_backup">...</span>)</span>
                 </div>
-
+                
                 <div class="w-100 border border-dark overflow-auto mb-1">
-                    <table class="table">
+                    <table class="table mb-0">
                         <thead>
                             <tr>
                                 <th scope="col" class="position-sticky sticky-top bg-primary">#</th>
@@ -36,7 +35,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <!-- <tr>
                                 <th scope="row">1</th>
                                 <td>filename.txt</td>
                                 <td>24.02.2019 22:31</td>
@@ -44,14 +43,14 @@
                             </tr>
                             <tr>
                                 <th scope="row" class="text-center" colspan="4">There is no backup file for this project.</th>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <th scope="row" class="text-center" colspan="4">Loading...</th>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-
+                
                 <div>
                     <span>Quick backup: </span> <select><option value="1">JSON Format</option></select> <button class="btn btn-sm btn-success">GENERATE</button>
                 </div>
@@ -65,6 +64,8 @@
 <script>
     load_logo();
     load_menu();
+    load_project(<?php echo $_GET['id']; ?>);
+    load_backups(<?php echo $_GET['id']; ?>);
 </script>
 
 </html>

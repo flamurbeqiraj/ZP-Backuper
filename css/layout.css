@@ -33,3 +33,7 @@ html, body {
 table.table > thead > tr > th {
     padding: .2rem .5rem;
 }
+
+#backup_info {
+    display: none;
+}
