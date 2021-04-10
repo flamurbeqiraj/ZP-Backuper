@@ -252,6 +252,24 @@ function registerNewDatabase(fpr, fhs, fus, fps, fdb) {
     });
 }
 
-function load_backups() {
-    
+function load_backups(prid) {
+    const no_backups = '<tr><th scope="row" class="text-center" colspan="4">There is no backup file for this project.</th></tr>';
+    $.ajax({
+        type: 'post',
+        url: 'includes/server.php',
+        data: {
+            case:       'checkBackupFiles',
+            project_id: prid
+        },
+        dataType: 'JSON',
+        success: function (response) {
+            if (response.length > 0) {
+                response.each(function() {
+
+                });
+            } else {
+                $("#body_result").html(no_backups);
+            }
+        }
+    });
 }

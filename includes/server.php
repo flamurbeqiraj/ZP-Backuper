@@ -189,3 +189,31 @@
             echo json_encode(array("error_status" => 2));
         }
     }
+    if (isset($_POST['case']) && $_POST['case'] == 'checkBackupFiles') {
+        require_once('dbcon.php');
+        $prid   = $_POST['project_id'];
+        $sql    = "SELECT * FROM `table_projects` WHERE `id`='$prid'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_array(MYSQLI_ASSOC);
+            $destination = '../backup/'.str_replace(' ', '_', strtolower($row['projectname'])).'/';
+            if (!file_exists('../backup/')) {
+                mkdir("../backup/", 0777);
+            }
+            if (!file_exists($destination)) {
+                mkdir($destination, 0777);
+            }
+
+            $final = array();
+            foreach (glob("*.json") as $filename) {
+                $subarray = array();
+
+                $subarray['filename'] = $filename;
+                $subarray['filesize'] = filesize($filename);
+
+                $final[] = $subarray;
+            }
+
+            echo json_encode($final);
+        }
+    }

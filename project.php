@@ -34,7 +34,7 @@
                                 <th scope="col" class="position-sticky sticky-top bg-primary">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="body_result">
                             <!-- <tr>
                                 <th scope="row">1</th>
                                 <td>filename.txt</td>
